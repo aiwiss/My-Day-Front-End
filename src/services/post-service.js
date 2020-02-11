@@ -2,7 +2,7 @@ import axios from 'axios';
 import { store } from '../redux/store';
 
 // TODO: replace with config
-const api = 'https://my-day-server.herokuapp.com/';
+const api = 'https://my-day-server.herokuapp.com';
 
 // export functions
 export const postService = {
