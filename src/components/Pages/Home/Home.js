@@ -33,6 +33,7 @@ const HomePage = () => {
   }
 
   useEffect(() => {
+    dispatch(postActions.getAll(page, limit));
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
