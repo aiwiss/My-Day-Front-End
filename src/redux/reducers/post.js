@@ -2,13 +2,14 @@ import { postActionTypes } from '../action-types/index';
 
 const initialState = {
   currentPosts: [],
-  post: {}
+  post: {},
 };
 
 export function postState(state = initialState, action) {
   switch(action.type){
     case postActionTypes.GETALL_SUCCESS:
-      if (!action.posts) {
+      
+      if (!action.posts && action.page !== 0) {
         return {
           ...state,
           reachedEnd: true
@@ -17,6 +18,7 @@ export function postState(state = initialState, action) {
       if (action.page === 0) {
         return {
           ...state,
+          reachedEnd: false,
           currentPosts: action.posts
         };
       }
@@ -80,8 +82,14 @@ export function postState(state = initialState, action) {
     case postActionTypes.CLEAR_POST:
       return {
         ...state,
-        post: null
+        post: null,
+        currentPosts: null
       };
+    case postActionTypes.UPDATE_EDITOR_STATE:
+      return {
+        ...state,
+        postHtml: action.content
+      }
     default:
       return state;
   }

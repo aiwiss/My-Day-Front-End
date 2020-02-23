@@ -11,7 +11,6 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Tooltip from '@material-ui/core/Tooltip';
-import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PublicIcon from '@material-ui/icons/Public';
@@ -21,6 +20,8 @@ import HappyFace from '../../../img/happy.png';
 import AverageFace from '../../../img/average.png';
 import SadFace from '../../../img/sad.png';
 import { Typography } from '@material-ui/core';
+import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Editor, EditorState, convertFromRaw} from 'draft-js';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -67,6 +68,9 @@ const useStyles = makeStyles(() => ({
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto'
+  },
+  postContent: {
+    wordWrap: 'break-word'
   }
 }));
 
@@ -75,6 +79,7 @@ const Post = (props) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userState.user);
   const post = props.post;
+  const [postContent, setPostContent] = useState(EditorState.createWithContent(convertFromRaw(JSON.parse(post.content)))); 
   let isAlreadyFavorite = post.favoriteOf.indexOf(user.pseudoname) !== -1;
   let isAlreadyPublic = post.public;
   let isAdmin = user.role === 'admin';
@@ -188,7 +193,7 @@ const Post = (props) => {
           </Typography>
           <img src={getEmotion()} className={classes.faceImg} />
         </span>
-        <FroalaEditorView model={post.content} />
+        <Editor editorState={postContent} readOnly />
       </CardContent>
       {props.showActions ? postActionsPanel() : null}
       <ConfirmDialog 

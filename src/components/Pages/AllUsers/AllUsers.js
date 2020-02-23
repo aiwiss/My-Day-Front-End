@@ -65,7 +65,6 @@ const AllUsersPage = () => {
   }
 
   const handleDeleteUser = deleteConfirmed => {
-    console.log(deleteConfirmed)
     if (!deleteConfirmed){
       setShowDeleteConfirm(!showDeleteConfirm);
       return;

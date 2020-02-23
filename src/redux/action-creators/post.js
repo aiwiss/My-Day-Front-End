@@ -9,7 +9,8 @@ export const postActions = {
   update,
   remove,
   clearPost,
-  removeAllByUser
+  removeAllByUser,
+  updatePostHtml
 };
 
 function getAll(page, limit) {
@@ -86,4 +87,8 @@ function clearPost() {
   return dispatch => {
     dispatch({ type: postActionTypes.CLEAR_POST })
   }
+}
+
+function updatePostHtml(content) {
+  return dispatch => dispatch({ type: postActionTypes.UPDATE_EDITOR_STATE, content});
 }

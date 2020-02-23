@@ -20,13 +20,12 @@ const HomePage = () => {
   const reachedEnd = useSelector(state => state.postState.reachedEnd);
   const user = useSelector(state => state.userState.user);
   const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(10);
+  const [forceUpdate, setForceUpdate] = useState(0);
 
   useEffect(() => {
     if (!reachedEnd) dispatch(postActions.getAll(page, limit));
   }, [page]);
-
-  useEffect(() => dispatch(postActions.getAll(page, limit)), [page]);
 
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;

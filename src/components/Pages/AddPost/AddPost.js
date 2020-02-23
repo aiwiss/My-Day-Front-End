@@ -23,13 +23,13 @@ const AddPostPage = () => {
   const classes = useStyles();
   const user = useSelector(state => state.userState.user);
   const post = useSelector(state => state.postState.post);
-  const [content, setContent] = useState('');
+  const postHtml = useSelector(state => state.postState.postHtml);
   const [emotion, setEmotion] = useState('happy');
 
   useEffect(() => {
     if (post) {
-      history.push('/');
       dispatch(postActions.clearPost());
+      history.push('/');
     }
   }, [post]);
 
@@ -38,9 +38,8 @@ const AddPostPage = () => {
   }
 
   const handleSubmit = isPostPublic => {
-    //if (!content.length) return;
     const postData = {
-      content,
+      content: postHtml,
       public: isPostPublic,
       author: user.pseudoname,
       emotion: emotion
@@ -56,9 +55,8 @@ const AddPostPage = () => {
           <Grid item xs={12}>
             <EmotionPanel onFaceClicked={handleFaceClicked}/>
           </Grid>
-
           <Grid item xs={12}>
-            <TextEditor model={content} onModelChange={setContent}/>
+            <TextEditor />
           </Grid>
           <Grid item xs={6}>
             <Button fullWidth color="primary" variant="contained" onClick={() => handleSubmit(false)}>
