@@ -11,10 +11,7 @@ export const messageActions = {
 };
 
 function getByUsername(username) {
-  return (dispatch, getState) => {
-    const { userState } = getState();
-    const { user } = userState;
-
+  return dispatch => {
     messageService.getUserMessages(username)
       .then(
         messageData => dispatch({ type: messageActionTypes.GET_SUCCESS, messageData }),
@@ -24,10 +21,7 @@ function getByUsername(username) {
 }
 
 function create(messageData) {
-  return (dispatch, getState) => {
-    const { userState } = getState();
-    const { user } = userState;
-
+  return dispatch => {
     messageService.create(messageData)
       .then(
         messageData => dispatch({ type: messageActionTypes.ADD_SUCCESS, messageData }),
