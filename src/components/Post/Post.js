@@ -4,7 +4,7 @@ import { alertMessages } from '../../misc/alertMessages';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import getUIDate from '../../misc/date';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardHeader, CardContent, CardActions, 
+import { Card, CardHeader, CardContent, CardActions,
   Avatar, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { FavoriteIcon, ChatBubbleIcon, DeleteIcon, PublicIcon } from './PostIcons';
 import HappyFace from '../../img/happy.png';
@@ -59,11 +59,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Post = (props) => {
-  const post = props.post;
-  const user = props.user;
+const Post = ({ post, user, ...props }) => {
   const classes = useStyles();
-  const postContent = EditorState.createWithContent(convertFromRaw(JSON.parse(post.content))); 
+  const postContent = EditorState.createWithContent(convertFromRaw(JSON.parse(post.content)));
   const isAdmin = user.role === 'admin';
   const isOwner = post.author === user.pseudoname;
   const isAlreadyPublic = post.public;
@@ -85,7 +83,7 @@ const Post = (props) => {
       const index = post.favoriteOf.indexOf(user.pseudoname);
       post.favoriteOf.splice(index, 1);
     }
-    
+
     setIsFavorite(!isFavorite);
     props.onFavoriteClick(post);
   };
@@ -140,7 +138,7 @@ const Post = (props) => {
     return (
     <CardActions disableSpacing>
       <Tooltip title="Legg til i favoritter">
-        <IconButton 
+        <IconButton
           className={favoriteClass}
           onClick={() => handleFavoriteClick()}>
           <FavoriteIcon />
@@ -152,7 +150,7 @@ const Post = (props) => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Sett historien som offentlig">
-        <IconButton 
+        <IconButton
           className={publicClass}
           onClick={() => handlePublicClick()}>
           <PublicIcon />
@@ -183,10 +181,10 @@ const Post = (props) => {
         <Editor editorState={postContent} readOnly />
       </CardContent>
       {props.showActions ? postActionsPanel() : null}
-      <ConfirmDialog 
-        open={showConfirmDelete} 
-        handleDeleteClick={handleDeletePost} 
-        header={alertMessages.DELETE_POST_CONFIRM.header} 
+      <ConfirmDialog
+        open={showConfirmDelete}
+        handleDeleteClick={handleDeletePost}
+        header={alertMessages.DELETE_POST_CONFIRM.header}
         message={alertMessages.DELETE_POST_CONFIRM.message}
         />
     </Card>

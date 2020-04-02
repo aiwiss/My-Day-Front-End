@@ -40,7 +40,7 @@ const MyStoriesPage = () => {
   const post = useSelector(state => state.postState.post);
   const posts = useSelector(state => state.postState.currentPosts);
   const [currentTab, SetCurrentTab] = useState(0);
-  
+
 
   useEffect(() => {
     if (currentTab === 0) dispatch(postActions.getByUsername(user.pseudoname));
@@ -62,9 +62,9 @@ const MyStoriesPage = () => {
   }
 
   const getPostsForRender = showPublicOnly => (
-    posts.map((post, index) =>
+    posts && posts.map((post, index) =>
       <React.Fragment key={index}>
-        <Post 
+        <Post
           post={post}
           user={user}
           onFavoriteClick={handleFavoriteClick}
@@ -89,7 +89,7 @@ const MyStoriesPage = () => {
           <Tab label="Favoritt historier" icon={<FavoriteIcon />} />
         </Tabs>
       </AppBar>
-      
+
       <div id="tab1" className={currentTab == 0 ? classes.visible : classes.hidden}>
         {posts && posts.length === 0 ?
         <div className={classes.info}>
@@ -105,7 +105,7 @@ const MyStoriesPage = () => {
         <div className={classes.info}>
           <Typography variant="h6" >
             {alertMessages.NO_FAVORITE_POSTS.message}
-          </Typography> 
+          </Typography>
         </div> :
         getPostsForRender(true)}
       </div>
